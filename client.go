@@ -15,6 +15,7 @@ import (
 
 type Client struct {
 	BaseURL    string
+	WsURL      string
 	Secret     string
 	Key        string
 	Passphrase string
@@ -93,7 +94,6 @@ func (c *Client) Request(method string, url string,
 		if err := decoder.Decode(&coinbaseError); err != nil {
 			return res, err
 		}
-
 		return res, error(coinbaseError)
 	}
 

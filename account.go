@@ -10,6 +10,7 @@ type Account struct {
 	Hold      float64 `json:"hold,string"`
 	Available float64 `json:"available,string"`
 	Currency  string  `json:"currency"`
+	ProfileID string  `json:"profile_id"`
 }
 
 // Ledger
