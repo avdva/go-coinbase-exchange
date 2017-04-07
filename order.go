@@ -18,11 +18,12 @@ type Order struct {
 	// Market Order
 	Funds float64 `json:"funds,string,omitempty"`
 	// Response Fields
-	Id         string `json:"id"`
-	Status     string `json:"status,omitempty"`
-	Settled    bool   `json:"settled,omitempty"`
-	DoneReason string `json:"done_reason,omitempty"`
-	CreatedAt  Time   `json:"created_at,string,omitempty"`
+	Id            string  `json:"id"`
+	Status        string  `json:"status,omitempty"`
+	Settled       bool    `json:"settled,omitempty"`
+	DoneReason    string  `json:"done_reason,omitempty"`
+	CreatedAt     Time    `json:"created_at,string,omitempty"`
+	ExecutedValue float64 `json:"executed_value,string,omitempty"`
 }
 
 type ListOrdersParams struct {
