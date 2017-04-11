@@ -21,4 +21,7 @@ type Message struct {
 	NewFunds      float64 `json:"new_funds,string"`
 	OldFunds      float64 `json:"old_funds,string"`
 	Message       string  `json:"message"`
+	// Two following fields are sent for authenticated feed only.
+	UserID    string `json:"user_id"`
+	ProfileID string `json:"profile_id"`
 }
