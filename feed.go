@@ -64,8 +64,8 @@ func (c *Client) subscribeWs(wsConn *ws.Conn, ch chan<- Message, products ...str
 	if err := wsConn.WriteJSON(subscribe); err != nil {
 		return err
 	}
-	var message Message
 	for {
+		var message Message
 		if err := wsConn.ReadJSON(&message); err != nil {
 			return err
 		}
