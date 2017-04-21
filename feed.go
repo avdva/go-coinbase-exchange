@@ -11,11 +11,13 @@ import (
 
 // SubscribeFeed subscribes for GDAX ws feed.
 //	ch - a channel, to where messages will be sent.
-//	stopCh - a channel to cancel subscribtion. IT is possible to send to it, or close it.
+//	stopCh - a channel to cancel or reset ws subscribtion.
+//		close it or send 'true' to stop subscribtion.
+//		send 'false' to reconnect. May be useful, if updates were stalled.
 //	products - list of products to subscribe.
 // if there are auth creds in client's config, the clients connects to the authenticated feed.
 // if there are 5 failed attempts to connect to the ws in a row, SubscribeFeed returns an error.
-func (c *Client) SubscribeFeed(ch chan<- Message, stopCh <-chan struct{}, products ...string) error {
+func (c *Client) SubscribeFeed(ch chan<- Message, stopCh <-chan bool, products ...string) error {
 	const maxErrorsInSeq = 5
 	var errNum int
 	for {
@@ -37,9 +39,11 @@ func (c *Client) SubscribeFeed(ch chan<- Message, stopCh <-chan struct{}, produc
 		select {
 		case err := <-errCh:
 			log.Printf("gdax: ws subscribe error: %v", err)
-		case <-stopCh:
+		case val, ok := <-stopCh:
 			wsConn.Close()
-			return nil
+			if !ok || val {
+				return nil
+			}
 		}
 	}
 }
